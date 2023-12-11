@@ -1,20 +1,17 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import MapComponent from "./components/Map/MapComponent";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const libraries = ["places"];
-const mapContainerStyle = {
-  width: "100vw",
-  height: "100vh",
-};
-const center = {
-  lat: 44.564156868000524,
-  lng: -123.27337630615084,
-};
-const markers = [];
-const markerList = () => {};
 
 const App = () => {
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    console.log(mapRef.current);
+  }, []);
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: API_KEY,
     libraries,
@@ -30,13 +27,7 @@ const App = () => {
 
   return (
     <div>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={15}
-        center={center}
-      >
-        <Marker position={center} />
-      </GoogleMap>
+      <MapComponent mapRef={mapRef} />
     </div>
   );
 };
