@@ -1,32 +1,45 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState } from "react";
+import { GoogleMap } from "@react-google-maps/api";
+import MarkerComponent from "./MarkerComponent";
 
 const MapComponent = () => {
-    const mapRef = useRef(null);
-    
-    useEffect(() => {
-        const mapOptions = {
-            center: { lat: 44.564156868000524, lng: -123.27337630615084 },
-            zoom: 14,
-        };
-        
-        const map = new window.google.maps.Map(mapRef.current, mapOptions);
-        
-        map.addListener('click', (event) => {
-            console.log("Inside Listener");
-            handleMapClick(event.latLng);
-        });
-    }, []);
-    
-    const handleMapClick = (location) => {
-        console.log("Handling Click");
-        new window.google.maps.Marker({
-            position: location,
-            map: mapRef.current,
-            title: 'New Marker',
-        });
+  const [markers, setMarkers] = useState([]);
+
+  const mapContainerStyle = {
+    width: "100vw",
+    height: "100vh",
+  };
+
+  const center = {
+    lat: 44.564156868000524,
+    lng: -123.27337630615084,
+  };
+
+  const onMapClick = (e) => {
+    const newMarker = {
+      position: e.latLng,
+      date: "Some Date",
     };
-    
-    return <div ref={mapRef} style={{ width: '100vw', height: '100vh' }}></div>;
+
+    setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+  };
+
+  return (
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      zoom={14}
+      onClick={onMapClick}
+      center={center}
+    >
+      {markers.map((marker, index) => (
+        <MarkerComponent
+          key={index}
+          position={marker.position}
+          date={marker.date}
+        />
+      ))}
+    </GoogleMap>
+  );
 };
 
 export default MapComponent;
