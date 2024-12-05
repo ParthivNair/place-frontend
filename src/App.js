@@ -1,6 +1,7 @@
 import React from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import MapComponent from "./components/Map/MapComponent";
+import NavbarComponent from "./components/Navbar/NavbarComponent";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const libraries = ["places"];
@@ -21,7 +22,12 @@ const App = () => {
 
   return (
     <div>
-      <MapComponent />
+      <div>
+        <NavbarComponent />
+      </div>
+      <div>
+        <MapComponent />
+      </div>
     </div>
   );
 };

@@ -11,11 +11,7 @@ const MarkerComponent = ({ position, date }) => {
   return (
     <Marker position={position} onClick={toggleInfoWindow}>
       {infoWindowOpen && (
-        <InfoWindow position={position} onCloseClick={toggleInfoWindow}>
-          <div>
-            <p>Date: {date}</p>
-          </div>
-        </InfoWindow>
+        <InfoWindow position={position} onCloseClick={toggleInfoWindow} />
       )}
     </Marker>
   );
